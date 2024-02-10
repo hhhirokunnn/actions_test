@@ -18,7 +18,8 @@ jobs:
             version: v0.14.7
       - name: diff
         run: |
-          # 下記コマンドで、 function.yml があるものだけを対象としたい
+          DIFF=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }})
+          echo $DIFF
           directories=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | xargs -n 1 dirname | sort | uniq)
 
           for directory in $directories; do
