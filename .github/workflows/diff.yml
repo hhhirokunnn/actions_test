@@ -18,11 +18,10 @@ jobs:
             version: v0.14.7
       - name: diff
         run: |
-          DIFF=$(git status)
-          echo $DIFF
           directories=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | xargs -n 1 dirname | sort | uniq)
 
           for directory in $directories; do
+            echo $directory
             if [ -f "$directory/function.json" ]; then
               echo "Changes detected in $directory"
               cd $directory
