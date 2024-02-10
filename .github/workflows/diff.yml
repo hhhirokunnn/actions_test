@@ -1,0 +1,44 @@
+name: 'diff'
+run-name: 'mukai-test-diff'
+on:
+  pull_request:
+    types: [opened, synchronize]
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.ACC_K }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.ACC_P }}
+  AWS_REGION: ${{ secrets.AWS_REGION }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+jobs:
+  Lambroll-Deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: fujiwara/lambroll@v0
+        with:
+            version: v0.14.7
+      - name: diff
+        run: |
+          # 下記コマンドで、 function.yml があるものだけを対象としたい
+          directories=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | xargs -n 1 dirname | sort | uniq)
+
+          for directory in $directories; do
+            if [ -f "$directory/function.json" ]; then
+              echo "Changes detected in $directory"
+              cd $directory
+              lambroll diff >> diff.txt
+              cd -
+            fi
+          done
+      - name: comment diff
+        uses: actions/github-script@v5
+        with:
+          script: |
+            const fs = require('fs');
+            const diff = fs.readFileSync('diff.txt', 'utf8');
+            github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `\`\`\`\n${diff}\n\`\`\``
+            });
+
