@@ -43,4 +43,4 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo ${{ github.event.pull_request.number }}
-          gh pr comment ${{ github.event.pull_request.number }} --edit-last --body "$LAMBDA_DIFF" || gh pr comment ${{ github.event.pull_request.number }} --edit-last --body "$LAMBDA_DIFF" 
+          gh pr comment ${{ github.event.pull_request.number }} --body "```diff\n$LAMBDA_DIFF```" || gh pr comment ${{ github.event.pull_request.number }} --edit-last --body "$LAMBDA_DIFF" 
