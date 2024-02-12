@@ -33,12 +33,11 @@ jobs:
               cd -
             # fi
           done
-          # {
-          #   echo 'LAMBDA_DIFF<<EOF'
-          #   echo $DIFF
-          #   echo EOF
-          # } >> "$GITHUB_OUTPUT"
-          echo "LAMBDA_DIFF=$(echo $DIFF)" >> "$GITHUB_OUTPUT"
+          {
+            echo 'LAMBDA_DIFF<<EOF'
+            echo $DIFF
+            echo EOF
+          } >> "$GITHUB_OUTPUT"
       - name: comment diff
         env:
           LAMBDA_DIFF: "${{ steps.detect-diff.outputs.LAMBDA_DIFF }}"
