@@ -42,4 +42,4 @@ jobs:
           LAMBDA_DIFF: ${{ steps.detect-diff.outputs.LAMBDA_DIFF }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh pr comment --body $LAMBDA_DIFF
+          gh pr comment --body 'aaaaa'
