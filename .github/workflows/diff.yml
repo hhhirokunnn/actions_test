@@ -36,7 +36,8 @@ jobs:
           #   echo $DIFF
           #   echo EOF
           # } >> "$GITHUB_OUTPUT"
-          echo "LAMBDA_DIFF=green" >> "$GITHUB_OUTPUT"
+          echo $DIFF
+          echo "LAMBDA_DIFF=$(echo $DIFF)" >> "$GITHUB_OUTPUT"
       - name: comment diff
         env:
           LAMBDA_DIFF: "${{ steps.detect-diff.outputs.LAMBDA_DIFF }}"
