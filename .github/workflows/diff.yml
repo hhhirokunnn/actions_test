@@ -38,7 +38,7 @@ jobs:
           } >> "$GITHUB_OUTPUT"
       - name: comment diff
         env:
-          LAMBDA_DIFF: ${{ steps.detect-diff.outputs.LAMBDA_DIFF }}
+          LAMBDA_DIFF: "${{ steps.detect-diff.outputs.LAMBDA_DIFF }}"
         uses: actions/github-script@v5
         with:
           script: |
