@@ -31,15 +31,17 @@ jobs:
               cd -
             fi
           done
-          {
-            echo 'LAMBDA_DIFF<<EOF'
-            echo $DIFF
-            echo EOF
-          } >> "$GITHUB_OUTPUT"
+          # {
+          #   echo 'LAMBDA_DIFF<<EOF'
+          #   echo $DIFF
+          #   echo EOF
+          # } >> "$GITHUB_OUTPUT"
+          run: echo "LAMBDA_DIFF=green" >> "$GITHUB_OUTPUT"
       - name: comment diff
         env:
           LAMBDA_DIFF: "${{ steps.detect-diff.outputs.LAMBDA_DIFF }}"
         run: |
+          echo 'bbb'
           echo $LAMBDA_DIFF
         # uses: actions/github-script@v5
         # with:
