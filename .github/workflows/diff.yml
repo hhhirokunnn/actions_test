@@ -24,13 +24,13 @@ jobs:
           DIFF=""
           for directory in $directories; do
             echo "Changes detected in $directory"
-            # if [ -f "$directory/function.json" ]; then
+            if [ -f "$directory/function.json" ]; then
               cd $directory
-              # DIFF+=$'\n'$(lambroll diff)
-              DIFF+=$'\n'$(echo "Changes detected in $directory")
+              DIFF+=$'\n'$(lambroll diff)
               cd -
-            # fi
+            fi
           done
+          if [ ${#DIFF} -lt 1 ]; then DIFF="Not detected any contents."; fi
           echo "$DIFF" >> $GITHUB_STEP_SUMMARY
           {
             echo 'LAMBDA_DIFF<<EOF'
