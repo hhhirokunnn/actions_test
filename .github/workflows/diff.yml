@@ -33,6 +33,7 @@ jobs:
               cd -
             # fi
           done
+          echo "$DIFF"
           {
             echo 'LAMBDA_DIFF<<EOF'
             echo $DIFF
@@ -43,6 +44,8 @@ jobs:
           LAMBDA_DIFF: "${{ steps.detect-diff.outputs.LAMBDA_DIFF }}"
         run: |
           echo $LAMBDA_DIFF
+          echo "hoge"
+          echo "$LAMBDA_DIFF"
         # uses: actions/github-script@v5
         # with:
         #   script: |
