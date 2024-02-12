@@ -22,13 +22,12 @@ jobs:
         id: detect-diff
         run: |
           directories=$(git diff --name-only origin/${{ github.base_ref }} origin/${{ github.head_ref }} | xargs -n 1 dirname | sort | uniq)
-          DIFF=""
           for directory in $directories; do
             echo $directory
             if [ -f "$directory/function.json" ]; then
               echo "Changes detected in $directory"
               cd $directory
-              DIFF+=$'\n'$(lambroll diff)
+              echo $(lambroll diff) >> $DIFF
               cd -
             fi
           done
@@ -49,6 +48,6 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
-              body: $LAMBDA_DIFF
+              body: echo "$LAMBDA_DIFF"
             });
 
