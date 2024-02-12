@@ -22,12 +22,14 @@ jobs:
         id: detect-diff
         run: |
           directories=$(git diff --name-only origin/${{ github.base_ref }} origin/${{ github.head_ref }} | xargs -n 1 dirname | sort | uniq)
+          DIFF=""
           for directory in $directories; do
             echo $directory
             if [ -f "$directory/function.json" ]; then
               echo "Changes detected in $directory"
               cd $directory
               echo $(lambroll diff) >> $DIFF
+              echo 'some'
               cd -
             fi
           done
@@ -36,13 +38,13 @@ jobs:
           #   echo $DIFF
           #   echo EOF
           # } >> "$GITHUB_OUTPUT"
+          echo 'hoge'
           echo $DIFF
           echo "LAMBDA_DIFF=$(echo $DIFF)" >> "$GITHUB_OUTPUT"
       - name: comment diff
         env:
           LAMBDA_DIFF: "${{ steps.detect-diff.outputs.LAMBDA_DIFF }}"
         run: |
-          echo 'bbb'
           echo $LAMBDA_DIFF
         # uses: actions/github-script@v5
         # with:
