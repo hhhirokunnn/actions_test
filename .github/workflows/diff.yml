@@ -1,5 +1,4 @@
 name: 'diff'
-run-name: 'mukai-test-diff'
 on:
   pull_request:
     types: [opened, synchronize]
