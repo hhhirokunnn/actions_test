@@ -19,6 +19,7 @@ jobs:
         with:
             version: v0.14.7
       - name: diff
+        id: detect-diff
         run: |
           directories=$(git diff --name-only origin/${{ github.base_ref }} origin/${{ github.head_ref }} | xargs -n 1 dirname | sort | uniq)
           DIFF=""
