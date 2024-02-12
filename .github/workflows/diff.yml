@@ -36,7 +36,7 @@ jobs:
           echo "$DIFF"
           {
             echo 'LAMBDA_DIFF<<EOF'
-            echo $DIFF
+            echo "$DIFF"
             echo EOF
           } >> "$GITHUB_OUTPUT"
       - name: comment diff
