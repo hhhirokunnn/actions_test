@@ -24,16 +24,15 @@ jobs:
           directories=$(git diff --name-only origin/${{ github.base_ref }} origin/${{ github.head_ref }} | xargs -n 1 dirname | sort | uniq)
           DIFF=""
           for directory in $directories; do
-            echo $directory
+            echo "Changes detected in $directory"
             # if [ -f "$directory/function.json" ]; then
-              echo "Changes detected in $directory"
               cd $directory
-              # echo $(lambroll diff) >> $DIFF
-              DIFF+=$'\n'$(echo $directory)
+              # DIFF+=$'\n'$(lambroll diff)
+              DIFF+=$'\n'$(echo "Changes detected in $directory")
               cd -
             # fi
           done
-          echo "$DIFF"
+          echo "$DIFF" >> $GITHUB_STEP_SUMMARY
           {
             echo 'LAMBDA_DIFF<<EOF'
             echo "$DIFF"
