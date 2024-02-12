@@ -21,18 +21,19 @@ jobs:
       - name: diff
         run: |
           directories=$(git diff --name-only origin/${{ github.base_ref }} origin/${{ github.head_ref }} | xargs -n 1 dirname | sort | uniq)
+          DIFF=""
           for directory in $directories; do
             echo $directory
             if [ -f "$directory/function.json" ]; then
               echo "Changes detected in $directory"
               cd $directory
-              lambroll diff >> /tmp/diff.txt
+              DIFF+=$'\n'$(lambroll diff)
               cd -
             fi
           done
           {
             echo 'LAMBDA_DIFF<<EOF'
-            cat /tmp/diff.txt
+            cat $DIFF
             echo EOF
           } >> "$GITHUB_OUTPUT"
       - name: comment diff
