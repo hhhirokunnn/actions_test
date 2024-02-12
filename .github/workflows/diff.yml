@@ -34,7 +34,7 @@ jobs:
           done
           {
             echo 'LAMBDA_DIFF<<EOF'
-            cat $DIFF
+            echo $DIFF
             echo EOF
           } >> "$GITHUB_OUTPUT"
       - name: comment diff
@@ -43,6 +43,8 @@ jobs:
         uses: actions/github-script@v5
         with:
           script: |
+            echo 'aaa'
+            echo $LAMBDA_DIFF
             github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
