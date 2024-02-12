@@ -29,8 +29,7 @@ jobs:
               echo "Changes detected in $directory"
               cd $directory
               # echo $(lambroll diff) >> $DIFF
-              DIFF+=$(echo $directory)
-              echo 'some'
+              DIFF+=$'\n'$(echo $directory)
               cd -
             # fi
           done
@@ -39,8 +38,6 @@ jobs:
           #   echo $DIFF
           #   echo EOF
           # } >> "$GITHUB_OUTPUT"
-          echo 'hoge'
-          echo $DIFF
           echo "LAMBDA_DIFF=$(echo $DIFF)" >> "$GITHUB_OUTPUT"
       - name: comment diff
         env:
