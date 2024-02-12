@@ -7,7 +7,6 @@ env:
   AWS_ACCESS_KEY_ID: ${{ secrets.ACC_K }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.ACC_P }}
   AWS_REGION: ${{ secrets.AWS_REGION }}
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 jobs:
   Lambroll-Deploy:
     runs-on: ubuntu-latest
@@ -41,5 +40,6 @@ jobs:
       - name: comment diff
         env:
           LAMBDA_DIFF: ${{ steps.detect-diff.outputs.LAMBDA_DIFF }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh pr comment --body $LAMBDA_DIFF
