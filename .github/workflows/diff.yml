@@ -9,8 +9,6 @@ env:
   AWS_REGION: ${{ secrets.AWS_REGION }}
 jobs:
   Lambroll-Deploy:
-    permissions:
-      pull-requests: write
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
